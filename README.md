@@ -194,16 +194,16 @@ Default typography now uses **Be Vietnam Pro** for both headings and body.
 
 To test long-form readability, bilingual content, and header hierarchy, use:
 
-- `/font-lab-overview` (parent page)
-- `/font-lab-editorial` (editorial content flow)
-- `/font-lab-modern-vn` (Vietnamese-focused content flow)
-- `/font-lab-balanced` (mixed long-form reading flow)
+- `/font-lab/overview` (parent page)
+- `/font-lab/editorial` (editorial content flow)
+- `/font-lab/modern-vn` (Vietnamese-focused content flow)
+- `/font-lab/balanced` (mixed long-form reading flow)
 
 These posts are intentionally long and include many heading levels (`H2`, `H3`, `H4`) for TOC and scroll testing.
 
 Recommended review flow:
 
-1. Open `/font-lab-overview`.
+1. Open `/font-lab/overview`.
 2. Read each child post for 2-3 minutes.
 3. Compare desktop and mobile readability.
 4. Validate heading hierarchy and paragraph comfort with Be Vietnam Pro baseline.
