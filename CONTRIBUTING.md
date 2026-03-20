@@ -44,6 +44,7 @@ When editing `config/sources.json`:
 - External skill repositories are tracked as git submodules.
 - Run `git submodule update --init --recursive` after cloning.
 - To refresh to latest tracked branch revisions, run `git submodule update --remote --recursive`.
+- For GitHub Actions auto-update on private submodules, configure repo secret `CLAUDEKIT_ACCESS_TOKEN`.
 
 ## Quality Checklist Before PR
 

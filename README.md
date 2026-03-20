@@ -131,6 +131,7 @@ git submodule update --remote --recursive
 Automation:
 
 - `.github/workflows/submodule-auto-update.yml` opens a weekly PR if submodule pointers changed.
+- For private external repos, set repository secret `CLAUDEKIT_ACCESS_TOKEN` (PAT with read access to both submodule repos).
 
 ## Notes on Content Compliance
 

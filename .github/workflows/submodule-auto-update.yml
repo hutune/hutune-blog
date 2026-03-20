@@ -21,8 +21,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          submodules: recursive
+          submodules: false
           fetch-depth: 0
+
+      - name: Ensure submodule access token exists
+        if: secrets.CLAUDEKIT_ACCESS_TOKEN == ''
+        run: |
+          echo "Missing secret: CLAUDEKIT_ACCESS_TOKEN"
+          echo "Add a PAT with at least read access to claudekit submodule repos."
+          exit 1
+
+      - name: Configure auth for private submodules
+        run: |
+          git config --global \
+            url."https://x-access-token:${{ secrets.CLAUDEKIT_ACCESS_TOKEN }}@github.com/".insteadOf \
+            "https://github.com/"
 
       - name: Update submodules to latest tracked branch
         run: |
