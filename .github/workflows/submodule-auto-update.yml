@@ -25,7 +25,7 @@ jobs:
           fetch-depth: 0
 
       - name: Ensure submodule access token exists
-        if: secrets.CLAUDEKIT_ACCESS_TOKEN == ''
+        if: ${{ secrets.CLAUDEKIT_ACCESS_TOKEN == '' }}
         run: |
           echo "Missing secret: CLAUDEKIT_ACCESS_TOKEN"
           echo "Add a PAT with at least read access to claudekit submodule repos."
