@@ -1,0 +1,19 @@
+automation:
+  label: Automation
+  permalink: /automation
+  description: Automated ingestion and publishing workflows.
+
+ai-summary:
+  label: AI Summary
+  permalink: /ai-summary
+  description: Posts generated from periodic summaries.
+
+source-digest:
+  label: Source Digest
+  permalink: /source-digest
+  description: Curated content from external tech sources.
+
+engineering:
+  label: Engineering
+  permalink: /engineering
+  description: Engineering and architecture updates.

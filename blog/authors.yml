@@ -1,0 +1,11 @@
+editorial:
+  name: Editorial Team
+  title: Curated technology insights
+  image_url: https://github.com/github.png
+  page: true
+
+bot:
+  name: Tech Briefing Bot
+  title: Automated feed summarizer
+  image_url: https://github.com/openai.png
+  page: true

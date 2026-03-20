@@ -1,0 +1,70 @@
+name: Tech Blog Ingest
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: Run without writing files
+        required: false
+        type: boolean
+        default: false
+      limit:
+        description: Max new posts to create in this run
+        required: false
+        type: string
+        default: '10'
+  schedule:
+    - cron: '0 */6 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tech-blog-ingest
+  cancel-in-progress: false
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    env:
+      LIMIT: ${{ github.event.inputs.limit || '10' }}
+      DRY_RUN: ${{ github.event.inputs.dry_run || 'false' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run ingest
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            npm run ingest:dry -- --limit "$LIMIT"
+          else
+            npm run ingest -- --limit "$LIMIT"
+          fi
+
+      - name: Commit generated posts
+        if: env.DRY_RUN != 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add blog/auto
+
+          if git diff --cached --quiet; then
+            echo "No generated content changes."
+          else
+            git commit -m "chore: ingest feed summaries"
+            git push
+          fi

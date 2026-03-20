@@ -1,0 +1,36 @@
+{
+  "defaults": {
+    "maxItemsPerRun": 3,
+    "requestTimeoutMs": 15000,
+    "userAgent": "TechBriefingBot/1.0 (+https://example.com/about)"
+  },
+  "sources": [
+    {
+      "id": "the-verge",
+      "name": "The Verge",
+      "enabled": true,
+      "type": "rss",
+      "feedUrl": "https://www.theverge.com/rss/index.xml",
+      "siteUrl": "https://www.theverge.com",
+      "tags": ["source-digest", "engineering"]
+    },
+    {
+      "id": "ars-technica",
+      "name": "Ars Technica",
+      "enabled": true,
+      "type": "rss",
+      "feedUrl": "https://feeds.arstechnica.com/arstechnica/index",
+      "siteUrl": "https://arstechnica.com",
+      "tags": ["source-digest", "engineering"]
+    },
+    {
+      "id": "techcrunch",
+      "name": "TechCrunch",
+      "enabled": true,
+      "type": "rss",
+      "feedUrl": "https://techcrunch.com/feed/",
+      "siteUrl": "https://techcrunch.com",
+      "tags": ["source-digest", "automation"]
+    }
+  ]
+}
