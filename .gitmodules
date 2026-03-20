@@ -1,0 +1,8 @@
+[submodule "claudekit-engineer"]
+	path = claudekit-engineer
+	url = https://github.com/claudekit/claudekit-engineer.git
+	branch = main
+[submodule "claudekit-marketing"]
+	path = claudekit-marketing
+	url = https://github.com/claudekit/claudekit-marketing.git
+	branch = main

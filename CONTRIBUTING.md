@@ -9,6 +9,7 @@ Contributions should keep the pipeline reliable, transparent, and easy to audit.
 
 ```bash
 npm install
+git submodule update --init --recursive
 ```
 
 ## Development Commands
@@ -19,6 +20,7 @@ npm run typecheck
 npm run ingest:dry -- --limit 5
 npm run ingest -- --limit 5
 npm run build
+git submodule update --remote --recursive
 ```
 
 ## Content Rules
@@ -36,6 +38,12 @@ When editing `config/sources.json`:
 - Keep `enabled` false for unverified sources.
 - Start with small `maxItemsPerRun` and increase after validation.
 - Use reasonable request settings (`requestTimeoutMs`, retries, delay).
+
+## Submodule Maintenance
+
+- External skill repositories are tracked as git submodules.
+- Run `git submodule update --init --recursive` after cloning.
+- To refresh to latest tracked branch revisions, run `git submodule update --remote --recursive`.
 
 ## Quality Checklist Before PR
 

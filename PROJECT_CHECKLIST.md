@@ -49,6 +49,8 @@ Last updated: 2026-03-20
 - [ ] Remove unused Docusaurus tutorial docs (if staying blog-only)
 - [x] Add CONTRIBUTING.md (runbook for ingest + content rules)
 - [x] Add environment variable documentation (`SITE_URL`, deploy vars)
+- [x] Add external skill repos as git submodules (`claudekit-engineer`, `claudekit-marketing`)
+- [x] Add weekly submodule auto-update workflow (PR-based)
 
 ## Priority next steps (recommended)
 

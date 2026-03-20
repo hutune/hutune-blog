@@ -37,6 +37,7 @@ hutune-blog/
 ```bash
 cd hutune-blog
 npm install
+git submodule update --init --recursive
 ```
 
 ## Local Commands
@@ -112,6 +113,24 @@ For GitHub Actions deploy, you can set repository variables:
 
 - `SITE_URL` (optional; default is `https://<owner>.github.io`)
 - `BASE_URL` (optional; default is `/<repo>/`)
+
+## External Skill Repos (Submodules)
+
+This repository tracks external skill packs as git submodules:
+
+- `claudekit-engineer`
+- `claudekit-marketing`
+
+Useful commands:
+
+```bash
+git submodule update --init --recursive
+git submodule update --remote --recursive
+```
+
+Automation:
+
+- `.github/workflows/submodule-auto-update.yml` opens a weekly PR if submodule pointers changed.
 
 ## Notes on Content Compliance
 
