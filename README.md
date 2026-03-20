@@ -65,6 +65,9 @@ Edit `config/sources.json`:
 - `siteUrl`: homepage URL used for relative links.
 - `tags`: tags attached to generated posts.
 - `maxItemsPerRun`: per-source cap for one run.
+- `requestTimeoutMs`: timeout for each feed request.
+- `requestRetries`: number of retries for retryable failures.
+- `requestRetryDelayMs`: base delay for retry backoff.
 
 Example:
 
@@ -82,18 +85,40 @@ Example:
 
 ## GitHub Automation
 
-Scheduled ingestion workflow:
+Workflows:
 
 - `.github/workflows/tech-blog-ingest.yml`
+- `.github/workflows/ci.yml`
+- `.github/workflows/deploy-pages.yml`
 
 Defaults:
 
-- Runs every 6 hours via cron.
-- Supports manual `workflow_dispatch` with `dry_run` and `limit`.
-- Auto-commits generated files under `blog/auto` when changed.
+- `tech-blog-ingest.yml`: runs every 6 hours, supports manual `dry_run` + `limit`,
+  and auto-commits generated files under `blog/auto` when changed.
+- `ci.yml`: runs on PR and pushes to `main` with `typecheck`, `build`, and `ingest:dry`.
+- `deploy-pages.yml`: deploys static site to GitHub Pages on push to `main`.
+  Manual dispatch can optionally run ingest before build.
+
+## Environment Variables
+
+Site config is environment-driven to support both local and GitHub Pages deploy:
+
+- `SITE_URL`: canonical site origin (example: `https://mazhnguyen.github.io`)
+- `BASE_URL`: route base path (example: `/hutune-blog/`)
+- `GITHUB_ORG`: GitHub org/user used for metadata links
+- `GITHUB_REPO`: GitHub repo used for metadata links
+
+For GitHub Actions deploy, you can set repository variables:
+
+- `SITE_URL` (optional; default is `https://<owner>.github.io`)
+- `BASE_URL` (optional; default is `/<repo>/`)
 
 ## Notes on Content Compliance
 
 - Respect each publisher's robots.txt and terms.
 - Keep summaries short and link back to the original article.
 - Avoid copying long verbatim content.
+
+## Contributing
+
+See `CONTRIBUTING.md` for runbook, quality checklist, and PR guidance.

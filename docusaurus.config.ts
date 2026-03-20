@@ -2,6 +2,12 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+const githubOrg = process.env.GITHUB_ORG ?? 'mazhnguyen';
+const githubRepo = process.env.GITHUB_REPO ?? 'hutune-blog';
+const repoUrl = `https://github.com/${githubOrg}/${githubRepo}`;
+const siteUrl = process.env.SITE_URL ?? `https://${githubOrg}.github.io`;
+const baseUrl = process.env.BASE_URL ?? `/${githubRepo}/`;
+
 const config: Config = {
   title: 'Tech Briefing',
   tagline: 'Tong hop va tom tat tin cong nghe theo dinh ky',
@@ -11,12 +17,12 @@ const config: Config = {
     v4: true,
   },
 
-  url: process.env.SITE_URL ?? 'https://example.com',
-  baseUrl: '/',
+  url: siteUrl,
+  baseUrl,
 
-  // Keep these placeholders if you deploy with GitHub Pages later.
-  organizationName: 'your-org',
-  projectName: 'tech-briefing',
+  // Used by Docusaurus deploy tooling and metadata.
+  organizationName: githubOrg,
+  projectName: githubRepo,
 
   onBrokenLinks: 'throw',
 
@@ -44,8 +50,7 @@ const config: Config = {
             type: ['rss', 'atom', 'json'],
             xslt: true,
           },
-          editUrl:
-            'https://github.com/your-org/hutune-blog/tree/main/',
+          editUrl: `${repoUrl}/tree/main/`,
           onInlineTags: 'warn',
           onInlineAuthors: 'warn',
           onUntruncatedBlogPosts: 'ignore',
@@ -82,7 +87,7 @@ const config: Config = {
         {to: '/tags', label: 'Topics', position: 'left'},
         {to: '/about', label: 'About', position: 'left'},
         {
-          href: 'https://github.com/your-org/your-repo',
+          href: repoUrl,
           label: 'GitHub',
           position: 'right',
         },
@@ -104,7 +109,7 @@ const config: Config = {
             {label: 'About', to: '/about'},
             {
               label: 'Source Code',
-              href: 'https://github.com/your-org/your-repo',
+              href: repoUrl,
             },
           ],
         },

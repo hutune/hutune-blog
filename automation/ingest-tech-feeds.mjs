@@ -50,10 +50,26 @@ async function main() {
 
     const maxItemsPerRun = numberOrDefault(source.maxItemsPerRun, defaults.maxItemsPerRun, 3);
     const requestTimeoutMs = numberOrDefault(source.requestTimeoutMs, defaults.requestTimeoutMs, 15000);
-    const userAgent = source.userAgent || defaults.userAgent || 'TechBriefingBot/1.0 (+https://example.com/about)';
+    const requestRetries = numberOrDefault(source.requestRetries, defaults.requestRetries, 2);
+    const requestRetryDelayMs = numberOrDefault(
+      source.requestRetryDelayMs,
+      defaults.requestRetryDelayMs,
+      1200,
+    );
+    const userAgent =
+      source.userAgent ||
+      defaults.userAgent ||
+      'TechBriefingBot/1.0 (+https://mazhnguyen.github.io/hutune-blog/about)';
 
     try {
-      const xml = await fetchFeed(source.feedUrl, requestTimeoutMs, userAgent);
+      const xml = await fetchFeedWithRetry({
+        url: source.feedUrl,
+        timeoutMs: requestTimeoutMs,
+        userAgent,
+        retries: requestRetries,
+        retryDelayMs: requestRetryDelayMs,
+        sourceId: source.id,
+      });
       const items = normalizeFeedItems(parser.parse(xml), source);
 
       if (items.length === 0) {
@@ -162,13 +178,57 @@ async function fetchFeed(url, timeoutMs, userAgent) {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      const error = new Error(`HTTP ${response.status} ${response.statusText}`);
+      error.status = response.status;
+      throw error;
     }
 
     return await response.text();
   } finally {
     clearTimeout(timeout);
   }
+}
+
+async function fetchFeedWithRetry({url, timeoutMs, userAgent, retries, retryDelayMs, sourceId}) {
+  let lastError = null;
+
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    try {
+      return await fetchFeed(url, timeoutMs, userAgent);
+    } catch (error) {
+      lastError = error;
+
+      if (attempt >= retries || !isRetryableError(error)) {
+        break;
+      }
+
+      const delayMs = retryDelayMs * 2 ** attempt;
+      console.warn(
+        `[${sourceId}] Fetch failed (attempt ${attempt + 1}/${retries + 1}): ${error.message}. Retrying in ${delayMs}ms...`,
+      );
+      await sleep(delayMs);
+    }
+  }
+
+  throw lastError ?? new Error('Unknown fetch failure');
+}
+
+function isRetryableError(error) {
+  const status = Number(error?.status);
+  if (Number.isFinite(status)) {
+    return status === 408 || status === 429 || status >= 500;
+  }
+
+  const message = String(error?.message ?? '').toLowerCase();
+  if (message.includes('abort')) {
+    return true;
+  }
+
+  return message.includes('network') || message.includes('fetch');
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 function normalizeFeedItems(parsedFeed, source) {
@@ -380,6 +440,8 @@ function decodeHtmlEntities(input) {
     .replace(/&amp;/gi, '&')
     .replace(/&quot;/gi, '"')
     .replace(/&#39;/gi, "'")
+    .replace(/&#8230;/gi, '...')
+    .replace(/&hellip;/gi, '...')
     .replace(/&lt;/gi, '<')
     .replace(/&gt;/gi, '>')
     .replace(/&#x2F;/gi, '/')
