@@ -6,3 +6,7 @@
 	path = claudekit-marketing
 	url = https://github.com/claudekit/claudekit-marketing.git
 	branch = main
+[submodule "skills/ui-ux-pro-max-skill"]
+	path = skills/ui-ux-pro-max-skill
+	url = https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git
+	branch = main

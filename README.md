@@ -129,6 +129,7 @@ This repository tracks external skill packs as git submodules:
 
 - `claudekit-engineer`
 - `claudekit-marketing`
+- `skills/ui-ux-pro-max-skill`
 
 ## Submodule Setup
 
@@ -184,6 +185,26 @@ Quick setup for `CLAUDEKIT_ACCESS_TOKEN`:
 3. Create `New repository secret`.
 4. Name: `CLAUDEKIT_ACCESS_TOKEN`.
 5. Value: token with read access to both submodule repositories.
+
+`skills/ui-ux-pro-max-skill` is public, so no extra secret is required for that submodule.
+
+## Font Lab Test Content
+
+To test long-form readability, bilingual content, and header hierarchy, use:
+
+- `/font-lab-overview` (parent page)
+- `/font-lab-editorial` (Option 1: Newsreader + Roboto)
+- `/font-lab-modern-vn` (Option 2: Noto Serif + Be Vietnam Pro)
+- `/font-lab-balanced` (Option 3: Lora + Source Sans 3)
+
+These posts are intentionally long and include many heading levels (`H2`, `H3`, `H4`) for TOC and scroll testing.
+
+Recommended review flow:
+
+1. Open `/font-lab-overview`.
+2. Read each child post for 2-3 minutes.
+3. Compare desktop and mobile readability.
+4. Pick one font option as default direction.
 
 ## Notes on Content Compliance
 

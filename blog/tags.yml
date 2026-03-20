@@ -17,3 +17,18 @@ engineering:
   label: Engineering
   permalink: /engineering
   description: Engineering and architecture updates.
+
+design-lab:
+  label: Design Lab
+  permalink: /design-lab
+  description: UI and UX experiments for content presentation.
+
+typography:
+  label: Typography
+  permalink: /typography
+  description: Font and readability testing across long-form posts.
+
+bilingual:
+  label: Bilingual
+  permalink: /bilingual
+  description: Posts that mix Vietnamese and English content for testing.
